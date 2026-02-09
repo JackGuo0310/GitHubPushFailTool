@@ -114,8 +114,15 @@ class ProxyGUI:
         self.message_label.pack(pady=5)
     
     def get_config_path(self):
-        """获取配置文件路径"""
-        return Path(__file__).parent / "proxy.ini"
+        """获取配置文件路径（兼容 PyInstaller 打包）"""
+        # PyInstaller 打包后 __file__ 指向临时目录
+        # 使用 sys.executable 获取 exe 所在目录
+        if getattr(sys, 'frozen', False):
+            # 打包后的程序
+            return Path(sys.executable).parent / "proxy.ini"
+        else:
+            # 原始 Python 脚本
+            return Path(__file__).parent / "proxy.ini"
     
     def load_config(self):
         """加载或创建配置文件"""

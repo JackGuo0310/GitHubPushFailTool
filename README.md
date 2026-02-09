@@ -154,6 +154,48 @@ __version__ = "1.0.0"
 - **配置文件位置**：与程序同目录的 `proxy.ini`
 - **手动保存**：点击界面上的「保存配置」按钮
 
+### PyInstaller 打包说明
+
+#### 推荐打包命令
+
+```bash
+# ✅ 方式一：带控制台（开发调试用，不卡）
+pyinstaller -F proxy_gui.py
+
+# ✅ 方式二：无控制台（发布用）
+pyinstaller -F -w proxy_gui.py
+
+# ✅ 方式三：无控制台 + 隐藏控制台窗口（Windows）
+pyinstaller -F --windowed --hide-console minimize-late proxy_gui.py
+```
+
+#### 打包后的文件位置
+
+打包完成后，exe 文件在 `dist/` 目录下：
+
+```
+dist/
+└── proxy_gui.exe  ← 双击运行
+```
+
+#### 配置文件位置
+
+打包后运行 exe 时，`proxy.ini` 会保存在：
+- **Windows**: 与 exe 同目录
+- **Python 脚本**: 与 `.py` 文件同目录
+
+#### 常见问题
+
+**Q: 打包后按钮卡顿怎么办？**
+A: 尝试以下方法：
+1. 确保使用 `-w` 参数
+2. 重启电脑后再试
+3. 更新 PyInstaller: `pip install --upgrade pyinstaller`
+4. 清理缓存: `pyinstaller --clean`
+
+**Q: 打包后找不到配置文件？**
+A: 程序会自动在 exe 同目录创建 `proxy.ini`
+
 ## 许可证
 
 MIT License - 自由使用和修改
